@@ -1,0 +1,18 @@
+{
+  "name": "todo-list-design-exercise",
+  "version": "1.0.0",
+  "description": "Design exercise from Week 3 of Advanced Software Design Web Course",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint todo.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "eslint": "^7.25.0",
+    "typescript": "^4.2.4"
+  }
+}
