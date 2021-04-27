@@ -20,3 +20,9 @@ Extend your design to support two of the following features:
     Adding due dates to todo items
 
 Make sure your new design makes it easy to filter and display to-do items in whatever way the user may reasonably expect.
+
+Assign statuses (in-progress, under review, blocked)
+Assign priorities(High, low, medium)
+FilterByPriorites
+FilterByStatus
+FilterByStatusAndPriority
