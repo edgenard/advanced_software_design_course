@@ -26,3 +26,21 @@ Assign priorities(High, low, medium)
 FilterByPriorites
 FilterByStatus
 FilterByStatusAndPriority
+
+
+Support a notion of users, where each user has a list of friends and a single todo list. Extend your design to support an "accountability" feature, where users can allow friends to view their todo list and progress. Make sure to allow users to mark some todo items as "private." If a todo item is "private," then no-one may view it or be given any information that it exists.
+
+Make sure to explain how the user interface for viewing a friend's to-do list would work, and in particular how it may reuse code from your normal user interface.
+
+User has a TodoList
+TodoItem can be private or public
+User has other users as Friends
+User can view Friends Public TodoItems
+
+Third round of feature requests
+
+Extend your design to support one of the following two features:
+
+    Ability to look up, for all users, how many have a todo item with the same name as one of yours. Also, explain how to extend your user interface to display the total number of todo items in the list currently being viewed. This feature is simple, but there are some easy ways to get it wrong.
+
+    Ability to go back into the past, and see what a user's todo list looked like at any point in time . Explain how this would work for todo lists that already exist.

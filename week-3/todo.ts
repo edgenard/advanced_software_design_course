@@ -15,23 +15,48 @@ enum ItemPriority {
 interface TodoItem {
   title: string,
   state: ItemState
-  priority: ItemPriority
+  priority: ItemPriority,
+  private: boolean
 }
 
-interface TodoList {
-  items: Array<TodoItem>,
-}
+
+type TodoList = Array<TodoItem>
 
 interface TodoListFilter {
   filterByStatus(list: TodoList, status: ItemState): TodoList,
-  filterByPriority(list: TodoList, priority: ItemPriority): TodoList
+  filterByPriority(list: TodoList, priority: ItemPriority): TodoList,
+  filterByTitle(list: TodoList, title: string): TodoList
+}
+
+
+
+interface User {
+  list: TodoList,
+  friends: Array<User>,
+  publicItems(): TodoList
+
+}
+
+interface ItemManipulator {
+  createItem(
+    itemTitle: string,
+    status: ItemState,
+    priority: ItemPriority,
+    private: boolean,
+    ): TodoItem,
+    deletItem(item: TodoItem): TodoItem,
+    updateStatus(item: TodoItem, status: ItemState): TodoItem,
+    updatePriority(item: TodoItem, priority: ItemPriority): TodoItem,
+    updatePrivacy(item: TodoItem, privacy: boolean): TodoItem
 }
 
 interface TodoApp {
-  list: TodoList,
+  user: User,
   filter: TodoListFilter,
-  createItem(itemTitle: string): TodoList,
-  deleteItem(item: TodoItem): TodoList,
-  viewList(): TodoList,
-  updateStatus(item: TodoItem, status: ItemState): TodoList,
+  itemManipulator: ItemManipulator,
+  createList(): TodoList,
+  viewUserList(user: User): TodoList,
+  viewFriendsList(friends: Array<User>): TodoList
+  findItemWithSameTitle(users: Array<User>, item: TodoItem): TodoItem
 }
+// The UI could get the number of TodoItem's currently shown on the screen by showing the size of TodoList
