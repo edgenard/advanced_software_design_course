@@ -36,3 +36,12 @@
 3. In the second design, LaundryDisplay has a reference to the Laundromat, but not to the WashingMachine’s. How would you enforce that it can only access whether a laundry machine is on?
 
    In this instance we might have more of an ability to make sure that `LaundryDisplay` only has access to whether or not a `WashingMachine` is on. The `WashingMachine` list is already private in `Laundromat`. If `Laundromat` exposes a list of `WashingMachineState` then `LaundryDisplay` will only be able to have access to public properties of `WashingMachineState`.
+
+   ```java
+      public class Laundromat {
+         private final List<WashingMachine> washers;
+         public final List<WashingMachineState> washerStates;
+      }
+   ```
+
+
