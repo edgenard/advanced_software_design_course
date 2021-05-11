@@ -45,3 +45,49 @@
    ```
 
 
+## Exercise 2
+
+Design an API for a Tic-Tac-Toe board, consisting of types repre- senting states of the board, along with functions move, takeMoveBack, whoWonOrDraw, and isPositionOccupied
+Note that you should not provide an AI for the game, nor an interactive interface for playing it, though either of these applications may use your API for manipulating board state.
+
+ - All functions must be pure. If you write a function, I must be able to call it with the same arguments and always get the same results, forever.
+ - All functions must return a sensible result, and may not throw exceptions
+ - If I call move on a tic-tac-toe board, but the game has finished, I should get a compile-time type-error. In other words, calling move on inappropriate game states (i.e. move doesnt make sense) is disallowed by the types.
+ - If I call takeMoveBack on a tic-tac-toe board, but no moves have yet been made, I get a compile-time type-error.
+ - If I call whoWonOrDraw on a tic-tac-toe board, but the game hasnt yet finished, I get a compile-time type-error.
+ - isPositionOccupied works for in-play and completed games.
+
+```typescript
+   const POSITIONS = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+   type Position = typeof POSITIONS[number]
+   // I'm not sure if this right. The idea is that Position is one of the values in POSITIONS
+
+   type Player = 'X' | 'O'
+
+   type Winner = Player | 'Draw'
+
+   interface Placement {
+       player: Player,
+       position: Position
+   }
+
+   interface EmptyBoard {
+       move(placement: Placement): InPlayBoard
+   }
+
+   interface InPlayBoard {
+       lastMove: Placement
+       takeMoveBack(): InPlayBoard | EmptyBoard
+       isPositionOccupied(position: Position): Boolean
+       move(placement: Placement): InPlayBoard | CompletedBoard
+   }
+
+   interface CompletedBoard {
+       lastMove: Placement
+       whoWonorDraw(): Winner
+       isPositionOccupied(position: Position): Boolean
+       takeMoveBack(): InPlayBoard
+
+   }
+
+```
