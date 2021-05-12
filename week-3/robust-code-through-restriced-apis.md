@@ -47,7 +47,7 @@
 
 ## Exercise 2
 
-Design an API for a Tic-Tac-Toe board, consisting of types repre- senting states of the board, along with functions move, takeMoveBack, whoWonOrDraw, and isPositionOccupied
+Design an API for a Tic-Tac-Toe board, consisting of types representing states of the board, along with functions move, takeMoveBack, whoWonOrDraw, and isPositionOccupied
 Note that you should not provide an AI for the game, nor an interactive interface for playing it, though either of these applications may use your API for manipulating board state.
 
  - All functions must be pure. If you write a function, I must be able to call it with the same arguments and always get the same results, forever.
@@ -58,13 +58,14 @@ Note that you should not provide an AI for the game, nor an interactive interfac
  - isPositionOccupied works for in-play and completed games.
 
 ```typescript
-   const POSITIONS = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+
+   const POSITIONS = [0, 1, 2, 3, 4, 5, 6, 7, 8] as const
    type Position = typeof POSITIONS[number]
-   // I'm not sure if this right. The idea is that Position is one of the values in POSITIONS
+
 
    type Player = 'X' | 'O'
 
-   type Winner = Player | 'Draw'
+   type Outcome = Player | 'Draw'
 
    interface Placement {
        player: Player,
@@ -84,10 +85,8 @@ Note that you should not provide an AI for the game, nor an interactive interfac
 
    interface CompletedBoard {
        lastMove: Placement
-       whoWonorDraw(): Winner
+       whoWonorDraw(): Outcome
        isPositionOccupied(position: Position): Boolean
        takeMoveBack(): InPlayBoard
-
    }
-
 ```
