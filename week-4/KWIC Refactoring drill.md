@@ -19,4 +19,31 @@
 I would look for the modulo operation that where the divisor is the lenght of the list and the dividend is the sum of indices of the first index and the index of the word whose circular shift we are looking for.
 
 
+## Data-Centric Refactoring
+
+1. For each module of the code: What secret is it hiding? That is, what design decisions are contained in that module, where changing the design decision could not change any other module.
+
+
+
+2. Consider each of the following design changes. What code would need to change for each?
+   1. Use of persistent storage (not in-memory) for the line storage
+   2. Using on-demand instead of up-front alphabetization. (I.e.: Using a selection algorithm instead of a sorting algorithm.)
+   3. Storing shifts in byte-packed arrays
+
+
+
+3. Separate each of lines_storage, circ_index, alph_index into their own "module," with an abstracted accessor interface. Each should not be accessed from outside that module.
+
+
+
+4. Refactor the code so that (1) the storage format of the input, and (2) the format of circular shifts are both now secrets. In particular, there should now be only one instance of the pattern you identified in question 2 of the previous exercise.
+
+
+
+5. Repeat question 1 for this refactored version.
+
+
+
+6. Repeat question 2 for this refactored version.
+
 
