@@ -3,6 +3,12 @@
 #%%
 import copy
 import functools
+from abc import ABC, abstractmethod
+
+class LineStorage(ABC):
+  @abstractmethod
+  def word_at(self, index):
+    pass
 
 # List of list of words
 
