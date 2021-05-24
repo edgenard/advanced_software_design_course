@@ -16,7 +16,7 @@
 
 3. How would you go about finding code in other programs that follows the circular-shift pattern? I.e.: what would you look for when skimming the code? You can't use the dataflow graph directly, but you can be inspired by it.
 
-I would look for the modulo operation that where the divisor is the lenght of the list and the dividend is the sum of indices of the first index and the index of the word whose circular shift we are looking for.
+I would look for the modulo operation where the divisor is the length of the list and the dividend is the sum of indices of the first index and the index of the word whose circular shift we are looking for. I think that is a strong signal that some kind of circular shift operations is happening.
 
 
 ## Data-Centric Refactoring
