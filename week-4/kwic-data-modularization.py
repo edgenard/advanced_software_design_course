@@ -101,7 +101,40 @@ class AlphIndex():
     self.index = 0
 
   def alphabetize(self):
-    pass
+    def compare_circ_shift_for_line(loc_line_and_word1, loc_line_and_word2):
+      # print('Inside cmp_csline', shift1, shift2)
+      def circ_shifted_word(shift, index_of_curr_word_in_line, lines):
+        (line_index, first_word_index) = shift
+        line = lines.line(line_index)
+        shifted_word_index = (first_word_index + index_of_curr_word_in_line) % line.word_count()
+        return line.word_at(shifted_word_index)
+
+      def cswords(shift, lines):
+        return lines.line(shift[0]).word_count()
+
+      def cmp(num1, num2):
+        return (num1>num2)-(num1<num2)
+
+      lines = self.line_storage
+
+      number_of_words1 = cswords(loc_line_and_word1, lines)
+      # print(f'# of words in line {shift1[0]}: {nwords1} ')
+      number_of_words2 = cswords(loc_line_and_word2, lines)
+      # print(f'# of words in line {shift2[0]}: {nwords2} ')
+      last_index = min(number_of_words1, number_of_words2)
+
+      for index_of_curr_word_in_line in range(last_index+1):
+        shifted_word1 = circ_shifted_word(loc_line_and_word1, index_of_curr_word_in_line, lines)
+        shifted_word2 = circ_shifted_word(loc_line_and_word2, index_of_curr_word_in_line, lines)
+        # print(f'circular shift word {cword1}, {cword2}')
+
+        if shifted_word1 != shifted_word2:
+          # print(f'when the words do not match result of {cmp(cword1, cword2)}')
+          return cmp(shifted_word1, shifted_word2)
+
+      return cmp(number_of_words1, number_of_words2)
+
+    return sorted(self.circularShift, key=functools.cmp_to_key(compare_circ_shift_for_line))
 
   def __iter__(self):
     return self
@@ -142,44 +175,43 @@ def cs_setup():
 ######################################################################
 ## ALPHABETIZING MODULE
 
-alph_index = None
 
-def alphabetize():
-    global alph_index, line_storage, circ_index
-    def compare_circ_shift_for_line(loc_line_and_word1, loc_line_and_word2):
-      # print('Inside cmp_csline', shift1, shift2)
-      def circ_shifted_word(shift, index_of_curr_word_in_line, lines):
-        (line_index, first_word_index) = shift
-        line = lines.line(line_index)
-        shifted_word_index = (first_word_index + index_of_curr_word_in_line) % line.word_count()
-        return line.word_at(shifted_word_index)
+# def alphabetize():
+    # global line_storage, circ_index
+    # def compare_circ_shift_for_line(loc_line_and_word1, loc_line_and_word2):
+    #   # print('Inside cmp_csline', shift1, shift2)
+    #   def circ_shifted_word(shift, index_of_curr_word_in_line, lines):
+    #     (line_index, first_word_index) = shift
+    #     line = lines.line(line_index)
+    #     shifted_word_index = (first_word_index + index_of_curr_word_in_line) % line.word_count()
+    #     return line.word_at(shifted_word_index)
 
-      def cswords(shift, lines):
-        return lines.line(shift[0]).word_count()
+    #   def cswords(shift, lines):
+    #     return lines.line(shift[0]).word_count()
 
-      def cmp(num1, num2):
-        return (num1>num2)-(num1<num2)
+    #   def cmp(num1, num2):
+    #     return (num1>num2)-(num1<num2)
 
-      lines = line_storage
+    #   lines = line_storage
 
-      number_of_words1 = cswords(loc_line_and_word1, lines)
-      # print(f'# of words in line {shift1[0]}: {nwords1} ')
-      number_of_words2 = cswords(loc_line_and_word2, lines)
-      # print(f'# of words in line {shift2[0]}: {nwords2} ')
-      last_index = min(number_of_words1, number_of_words2)
+    #   number_of_words1 = cswords(loc_line_and_word1, lines)
+    #   # print(f'# of words in line {shift1[0]}: {nwords1} ')
+    #   number_of_words2 = cswords(loc_line_and_word2, lines)
+    #   # print(f'# of words in line {shift2[0]}: {nwords2} ')
+    #   last_index = min(number_of_words1, number_of_words2)
 
-      for index_of_curr_word_in_line in range(last_index+1):
-        shifted_word1 = circ_shifted_word(loc_line_and_word1, index_of_curr_word_in_line, lines)
-        shifted_word2 = circ_shifted_word(loc_line_and_word2, index_of_curr_word_in_line, lines)
-        # print(f'circular shift word {cword1}, {cword2}')
+    #   for index_of_curr_word_in_line in range(last_index+1):
+    #     shifted_word1 = circ_shifted_word(loc_line_and_word1, index_of_curr_word_in_line, lines)
+    #     shifted_word2 = circ_shifted_word(loc_line_and_word2, index_of_curr_word_in_line, lines)
+    #     # print(f'circular shift word {cword1}, {cword2}')
 
-        if shifted_word1 != shifted_word2:
-          # print(f'when the words do not match result of {cmp(cword1, cword2)}')
-          return cmp(shifted_word1, shifted_word2)
+    #     if shifted_word1 != shifted_word2:
+    #       # print(f'when the words do not match result of {cmp(cword1, cword2)}')
+    #       return cmp(shifted_word1, shifted_word2)
 
-      return cmp(number_of_words1, number_of_words2)
+    #   return cmp(number_of_words1, number_of_words2)
 
-    alph_index = sorted(circ_index, key=functools.cmp_to_key(compare_circ_shift_for_line))
+    # alph_index = sorted(circ_index, key=functools.cmp_to_key(compare_circ_shift_for_line))
 
 ######################################################################
 ## OUTPUT MODULE
@@ -195,7 +227,7 @@ def print_all_alph_cs_lines():
         return [lines.word_at(lno,((idx_of_curr_word + first_word_no) % wrd_cnt)) for idx_of_curr_word in range(wrd_cnt)]
 
     shifted_lines = []
-    for shift in alph_index:
+    for shift in AlphIndex(circ_index, line_storage):
         shifted_lines.append((csline(shift, line_storage)))
         print (csline(shift, line_storage))
     return shifted_lines
@@ -212,7 +244,7 @@ putfile([["a", "b", "c", "d"],
          ["one"],
          ["hey", "this", "is", "different"]])
 cs_setup()
-alphabetize()
+# alphabetize()
 print_all_alph_cs_lines()
 print(circ_index.circular_shifts)
 
@@ -225,7 +257,7 @@ class KwicTest(unittest.TestCase):
          ["one"],
          ["hey", "this", "is", "different"]])
     cs_setup()
-    alphabetize()
+    # alphabetize()
 
   def test_result_stays_the_same(self):
     expectation = [

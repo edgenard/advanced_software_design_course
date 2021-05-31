@@ -84,7 +84,7 @@ def print_all_alph_cs_lines():
         # print(f'Shift {shift}')
         # print(f' word count {wrd_cnt}')
         # print(f'{ [lines[lno][(0+first_word_no) % wrd_cnt]] }')
-        lines[lno] [(i+first_word_no) % wrd_cnt]
+        # lines[lno] [(i+first_word_no) % wrd_cnt]
         return [lines[lno][(i+first_word_no) % wrd_cnt] for i in range(wrd_cnt)]
 
     for shift in alph_index:
