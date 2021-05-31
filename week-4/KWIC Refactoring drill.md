@@ -42,17 +42,18 @@
 
 3. Separate each of lines_storage, circ_index, alph_index into their own "module," with an abstracted accessor interface. Each should not be accessed from outside that module.
 
-
+   Gist: https://gist.github.com/edgenard/b4c5361f13a2f9b42d9e6ad99fb17ea6
 
 
 4. Refactor the code so that (1) the storage format of the input, and (2) the format of circular shifts are both now secrets. In particular, there should now be only one instance of the pattern you identified in question 2 of the previous exercise.
 
+   I am not sure how to do this. I've linked what I came up in the gist for the answer to question 3.
 
 
 5. Repeat question 1 for this refactored version.
 
-
+   I'm not sure about this since I could not come up with an answer to question 4
 
 6. Repeat question 2 for this refactored version.
 
-
+   I'm not sure about this since I could not come up with answer to question 4.'s
