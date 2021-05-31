@@ -23,7 +23,7 @@
 
 1. For each module of the code: What secret is it hiding? That is, what design decisions are contained in that module, where changing the design decision could not change any other module.
 
-    I'm not sure anything is hidden here. Since `line_storage` is a global variable and the operations on it, to do the circular shift and sort it alphabetically depend on it being an array of arrays. The `circ_index` being a array of tuples also limits the reasonable implementations of calculating and sorting the circular shift.
+    I'm not sure anything is hidden here. Since `line_storage` is a global variable and doing's operations on it depend on knowing that it is an array of arrays. The `circ_index` being a array of tuples also limits the reasonable implementations of calculating and sorting the circular shift.
 
 2. Consider each of the following design changes. What code would need to change for each?
    1. Use of persistent storage (not in-memory) for the line storage
@@ -36,11 +36,12 @@
 
    3. Storing shifts in byte-packed arrays
 
-      `alphabetize` and `print_all_alph_cs_lines` would need to change.
+      `alphabetize`, `print_all_alph_cs_lines`, and `cs_setup` would need to change.
 
 
 
 3. Separate each of lines_storage, circ_index, alph_index into their own "module," with an abstracted accessor interface. Each should not be accessed from outside that module.
+
 
 
 
