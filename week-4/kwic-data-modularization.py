@@ -4,6 +4,16 @@
 import copy
 import functools
 
+
+
+
+# List of list of words
+
+line_storage = None
+def putfile(linelist):
+    global line_storage
+    line_storage = LineStorage(copy.copy(linelist))
+
 class Line():
   def __init__(self, line: list):
     self.line = line
@@ -49,6 +59,24 @@ class LineStorage():
       self.index = 0
       raise StopIteration
 
+
+
+######################################################################
+## CIRCULAR SHIFTER
+#
+# Make circ_index store something represetning all circular shifts
+#
+# Fact: For a line with K words, there are K circular shifts.
+# As a result, the ith shift is the line containing the ith word in the file,
+#
+
+# Store shifts as (line, shift idx) pairs
+circ_index = None
+
+def cs_setup():
+    global circ_index, line_storage
+
+    circ_index = CircularShift(line_storage)
 class CircularShift():
 
   def __init__(self, line_storage: LineStorage):
@@ -92,7 +120,8 @@ class CircularShift():
 
   def circ_shift_at(self, line: Line, word_idx: int):
     pass
-
+######################################################################
+## ALPHABETIZING MODULE
 class AlphIndex():
   def __init__(self, circularShift: CircularShift, line_storage: LineStorage):
     self.circularShift = circularShift
@@ -102,7 +131,6 @@ class AlphIndex():
 
   def alphabetize(self):
     def compare_circ_shift_for_line(loc_line_and_word1, loc_line_and_word2):
-      # print('Inside cmp_csline', shift1, shift2)
       def circ_shifted_word(shift, index_of_curr_word_in_line, lines):
         (line_index, first_word_index) = shift
         line = lines.line(line_index)
@@ -112,8 +140,8 @@ class AlphIndex():
       def cswords(shift, lines):
         return lines.line(shift[0]).word_count()
 
-      def cmp(num1, num2):
-        return (num1>num2)-(num1<num2)
+      def cmp(word1, word2):
+        return (word1>word2)-(word1<word2)
 
       lines = self.line_storage
 
@@ -148,82 +176,14 @@ class AlphIndex():
       self.index = 0
       raise StopIteration
 
-# List of list of words
-
-line_storage = None
-def putfile(linelist):
-    global line_storage
-    line_storage = LineStorage(copy.copy(linelist))
-
-######################################################################
-## CIRCULAR SHIFTER
-#
-# Make circ_index store something represetning all circular shifts
-#
-# Fact: For a line with K words, there are K circular shifts.
-# As a result, the ith shift is the line containing the ith word in the file,
-#
-
-# Store shifts as (line, shift idx) pairs
-circ_index = None
-
-def cs_setup():
-    global circ_index, line_storage
-
-    circ_index = CircularShift(line_storage)
-
-######################################################################
-## ALPHABETIZING MODULE
-
-
-# def alphabetize():
-    # global line_storage, circ_index
-    # def compare_circ_shift_for_line(loc_line_and_word1, loc_line_and_word2):
-    #   # print('Inside cmp_csline', shift1, shift2)
-    #   def circ_shifted_word(shift, index_of_curr_word_in_line, lines):
-    #     (line_index, first_word_index) = shift
-    #     line = lines.line(line_index)
-    #     shifted_word_index = (first_word_index + index_of_curr_word_in_line) % line.word_count()
-    #     return line.word_at(shifted_word_index)
-
-    #   def cswords(shift, lines):
-    #     return lines.line(shift[0]).word_count()
-
-    #   def cmp(num1, num2):
-    #     return (num1>num2)-(num1<num2)
-
-    #   lines = line_storage
-
-    #   number_of_words1 = cswords(loc_line_and_word1, lines)
-    #   # print(f'# of words in line {shift1[0]}: {nwords1} ')
-    #   number_of_words2 = cswords(loc_line_and_word2, lines)
-    #   # print(f'# of words in line {shift2[0]}: {nwords2} ')
-    #   last_index = min(number_of_words1, number_of_words2)
-
-    #   for index_of_curr_word_in_line in range(last_index+1):
-    #     shifted_word1 = circ_shifted_word(loc_line_and_word1, index_of_curr_word_in_line, lines)
-    #     shifted_word2 = circ_shifted_word(loc_line_and_word2, index_of_curr_word_in_line, lines)
-    #     # print(f'circular shift word {cword1}, {cword2}')
-
-    #     if shifted_word1 != shifted_word2:
-    #       # print(f'when the words do not match result of {cmp(cword1, cword2)}')
-    #       return cmp(shifted_word1, shifted_word2)
-
-    #   return cmp(number_of_words1, number_of_words2)
-
-    # alph_index = sorted(circ_index, key=functools.cmp_to_key(compare_circ_shift_for_line))
-
 ######################################################################
 ## OUTPUT MODULE
 
 def print_all_alph_cs_lines():
-    global alph_index, line_storage
+    global line_storage
     def csline(shift, lines):
         (lno, first_word_no) = shift
         wrd_cnt = lines.line(lno).word_count()
-        # print(f'Shift {shift}')
-        # print(f' word count {wrd_cnt}')
-        # print(f'{ [lines[lno][(0+first_word_no) % wrd_cnt]] }')
         return [lines.word_at(lno,((idx_of_curr_word + first_word_no) % wrd_cnt)) for idx_of_curr_word in range(wrd_cnt)]
 
     shifted_lines = []
@@ -244,9 +204,7 @@ putfile([["a", "b", "c", "d"],
          ["one"],
          ["hey", "this", "is", "different"]])
 cs_setup()
-# alphabetize()
 print_all_alph_cs_lines()
-print(circ_index.circular_shifts)
 
 import unittest
 
