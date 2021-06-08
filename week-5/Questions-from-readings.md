@@ -6,6 +6,5 @@ __Use the laws of this reading to rewrite this type to not have any sums: (int+s
 
 
 ```
-int -> bool
-string -> bool
+(int -> bool) && (string -> bool)
 ```
