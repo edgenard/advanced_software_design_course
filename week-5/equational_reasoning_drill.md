@@ -97,8 +97,17 @@ b === b
 
 ## Conditional to Function
 
-_I don't see how to do this_
 
 ```
 if (A) o.foo() else o.bar() === f = if (A) (() -> o.foo()) else (() -> o.bar()); f()
+
+A = false;
+if (false) o.foo() else o.bar() === f = if (false) (() -> o.foo()) else (() -> o.bar()); f()
+o.bar() === f = () -> o.bar(); f()
+o.bar() === f = o.bar()
+
+A = true
+if (true) o.foo() else o.bar() === f = if (true) (() -> o.foo()) else (() -> o.bar()); f()
+o.foo() === f = () -> o.foo()); f()
+o.foo() === f = o.foo())
 ```
