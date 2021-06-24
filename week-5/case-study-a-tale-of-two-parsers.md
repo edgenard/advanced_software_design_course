@@ -44,3 +44,14 @@
 7. Show how to algebraically modify the two algebraic data types for the respective Type classes to be as similar as possible. Show your steps and name the algebraic laws used at each.
 
 
+## Code follows data
+
+Consider OffByOneOperation.java, which patches an expression by adding or subtracting one.
+
+1. Look at the mutateIndex method, and consider the cases for PrefixExpression and PostfixExpression. What prevents the Genprog authors from merging both into one case?
+
+    They have different requirements
+
+2. Sketch what these cases would look like had Genprog 4 Java been built on Javaparser instead of the Eclipse JDT.
+3. What changes would need to be made to the Eclipse JDT so that the authors of Genprog can merge these cases? What algebraic laws make this possible?
+4. What would the authors of Genprog have to do in order to merge those cases without changing the Eclipse JDT?
