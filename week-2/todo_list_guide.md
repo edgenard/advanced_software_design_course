@@ -172,6 +172,8 @@ Implementing (2) is much more complicated. Three families of approaches:
 
 3. Change all entities to be immutable; add a timestamp and parent to each. E.g.:
 
+
+```JAVA
 public class TodoItem {
 private DateTime timestamp;
 private @Nullable TodoItem parent;
@@ -181,9 +183,10 @@ private TodoStatus status;
 public TodoItem withUpdatedStatus(TodoStatus); // returnValue.parent == this; returnValue has timestamp set to now
 }
 
+```
 Adding/removing an element to a TodoList will do a similar immutable update to what withUpdatedStatus does.
 
 However, changing a TodoItem will mutate its containing lists in place. Then, the latest version will always be used for privacy checks. (Can implement this by placing a mutable TodoItemRef in the lists, rather than a TodoItem directly.)
-This solution is essentially a variant of #2, using a tree-structured log instead of a list. It can be represented as a changelog rather than a list of successive versions as an optimization.
+This solution is essentially a variant of #2, using a tree-structured log instead of a list. It can be represented as a change-log rather than a list of successive versions as an optimization.
 
 This approach is the cleanest solution I've found to this problem, and the only one which handles privacy concerns with no explicit code.
